@@ -94,6 +94,6 @@
   }
 
   if(typeof(window.VEngine) === 'undefined') window.VEngine = VEngine();
-  if (window.VEngine) console.info("𝘷Σ: Initialized.");
+  if (window.VEngine) console.info("𝘷Σ: Fully Initialized");
   else console.error("𝘷Σ: Vengien 1.0a could not load.");
 }) (window);
