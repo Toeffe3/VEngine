@@ -2,7 +2,6 @@
   'use strict';
   function object(cx,cy) {return new VObject(cx,cy);}
   function simpel() {return new SimpelObject();}
-  function ellips(x,y,rx,ry) {return new VEllipse(x,y,rx,ry);}
   function point(x,y) {return new VPoint(x,y);}
 
   class VObject {
@@ -110,25 +109,24 @@
    */
     static victor(p1, p2){return new VLine(this.x,this.y,p.x,p.y)}
   /* {VLine.js} distance(p1, p2)
-   * Find the distance between two points
+   * Find the distance between two points.
    * p1 - x cordinate of point.
    * p2 - y cordinate of point.
    * return: The distance between two VPoints
    */
     static distance(p1, p2){return new VLine(p1.x,p1.y,p2.x,p2.y).absolute()}
-  /* {VObject.js} distance(p1, p2)
-   * Find the distance between two points
-   * p1 - x cordinate of point.
-   * p2 - y cordinate of point.
-   * return: The distance between two VPoints
-   */
-    static distance(p1, p2){return Math.pow(p2.x-p1.x)+Math.pow(p2.y-p1.y)}
+    /* {VLine.js} distance(p)
+    * Find the distance between this an a VPoint.
+    * p - x cordinate of point.
+    * return: The distance between the two VPoints
+    */
+    distance(p){return new VLine(this.x,this.y,p.x,p.y).absolute()}
+
   }
 
-  if(typeof(window.VObject) === 'undefined') window.VObject = function(cx,cy) {return object(cx,cy);}
+  if(typeof(window.VObject) === 'undefined') window.VObject = function(cx,cy) {if(cx===undefined)return VObject;else return object(cx,cy);}
   if(typeof(window.SimpelObject) === 'undefined') window.SimpelObject = function() {return simpel();}
-  if(typeof(window.VEllipse) === 'undefined') window.VEllipse = function(x,y,rx,ry) {return ellips(x,y,rx,ry);}
-  if(typeof(window.VPoint) === 'undefined') window.VPoint = function(x,y) {return point(x,y);}
-  if (VObject && SimpelObject && VEllipse && VPoint) console.info("𝘷Σ: VObject loaded");
+  if(typeof(window.VPoint) === 'undefined') window.VPoint = function(x,y) {if(x===undefined)return VPoint;else return point(x,y);}
+  if (VObject && SimpelObject && VPoint) console.info("𝘷Σ: VObject loaded");
   else console.error("𝘷Σ: VObject could not be loaded");
 }) (window);

@@ -18,7 +18,37 @@
     <script src="addons/VLine.js" charset="utf-8"></script>
     <!-- Scripts -->
     <script src="VEngine.js" charset="utf-8"></script>
-    <script src="main.js" charset="utf-8"></script>
+    <script charset="utf-8">
+      VEngine.framerate(20);
+      let c2d;
+      let v1 = VVector(100,100,0,200);
+      let v2 = VLine(300,100,0,200);
+      let v3 = VVector().add(v1, v2);
+
+      VEngine.load(function() {
+        c2d = VCanvas(400,400);
+        c2d.background(0);
+      });
+
+      VEngine.loop(function() {
+
+        c2d.clear();
+        c2d.stroke(255,0,0);
+        v1.drawTo(c2d,10);
+
+        c2d.stroke(0,255,0);
+        v2.drawTo(c2d,10);
+
+        c2d.stroke(255,255,0);
+        v3.drawTo(c2d,10);
+
+        v3.rotate(Math.PI/20);
+
+        if (v3.angle >= Math.PI*2.3) {
+          VEngine.unloop();
+        }
+      });
+    </script>
   </head>
   <body>
 
