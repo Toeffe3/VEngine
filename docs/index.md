@@ -1,3 +1,5 @@
 # Welcome
 
-_Exampels will soon be available_
+_More exampels will soon be available_
+
+* [Using Vectors](exampel.html)
