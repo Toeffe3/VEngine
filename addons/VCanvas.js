@@ -114,6 +114,7 @@
      * xe - x offset end.
      * ye - y offset end.
      * return: undefined.
+     * NOTICE: Call at the beginning of cycle, NOT the end
      */
     clear(x,y,xe,ye){this.ctx.clearRect(x||0,y||0,xe||this.w,ye||this.h);}
     /* {VCanvas.js} resize(width,height)
@@ -121,6 +122,7 @@
      * width - set the new width.
      * height - set the new height.
      * return: undefined.
+     * NOTICE resize will clear the canvas and act the same as clear()
      */
     resize(width,height){this.w=width||window.innerWidth;this.h=height||window.innerHeight;this.canvas.width=this.w;this.canvas.height=this.h;}
   }

@@ -2,9 +2,84 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>VEngine - Exampel 1</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>VEngine</title>
+    <style media="screen">
+      body, canvas, textarea {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+      }
+
+      textarea {
+        height: 100vh;
+        width: 550px;
+        position: fixed;
+      }
+
+      canvas {
+        position: fixed;
+        right: 0px;
+        width: calc(100vw - 550px);
+        /* height: 100vh; */
+      }
+
+    </style>
+    <!-- Addons -->
+    <script src="../addons/VCanvas.js" charset="utf-8"></script>
+    <script src="../addons/VLine.js" charset="utf-8"></script>
+    <!-- Scripts -->
+    <script src="../VEngine.js" charset="utf-8"></script>
+    <script id="rep" charset="utf-8">
+
+      // Using VCanvas
+      // Using VLine
+
+      VEngine.framerate(60);    // Set target framerate
+
+      let c2d;                  // Global variable for canvas
+
+      // Vector from 100,100 pointing to 0 RAD and 200px long
+      let v1 = VVector(100,100,0,200);
+
+      // Vector from 300,100 no x-change and 200px y-change
+      let v2 = VLine(300,100,0,200);
+
+      let v3 = VVector().add(v1, v2); // Add 2 vectors together;
+
+      VEngine.load(function() { // Once:
+        c2d = VCanvas(400,400); // Set the amount of pixels
+        c2d.background(0);      // Set background color to black
+      });
+
+      VEngine.loop(function() { // Continuously:
+
+        c2d.clear();            // Clear
+
+        c2d.stroke(255,0,0);    // Red line
+        v1.drawTo(c2d,10);      // Draw v1
+
+        c2d.stroke(0,255,0);    // Green line
+        v2.drawTo(c2d,10);      // Draw v2
+
+        c2d.stroke(255,255,0);  // Yellow line
+        v3.drawTo(c2d,10);      // Draw v3
+
+        v3.rotate(Math.PI/20);
+
+        if (v3.angle >= Math.PI*2.3) {
+          VEngine.unloop();       // Stop looping
+        }
+      });
+    </script>
   </head>
   <body>
-    
+    <textarea id="inp" readonly></textarea>
+    <script type="text/javascript" defer>
+      document.getElementById('inp').innerHTML = document.getElementById('rep').innerHTML;
+    </script>
   </body>
 </html>
