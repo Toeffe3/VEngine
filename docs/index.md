@@ -2,4 +2,4 @@
 
 _More exampels will soon be available_
 
-* [Using Vectors](exampel.html)
+* [Using Vectors](example1.html)
