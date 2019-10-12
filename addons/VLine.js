@@ -97,7 +97,7 @@
     super(x,y,Math.atan((h)/(w)),Math.sqrt(Math.pow(w,2)+Math.pow(h,2)));}
   }
 
-  if(typeof(window.VVector) === 'undefined') window.VVector = function(x,y,dir,len) {return victor(x,y,dir,len);}
+  if(typeof(window.VVector) === 'undefined') window.VVector = function(x,y,dir,len) {if(x===undefined)return Victor;else return victor(x,y,dir,len);}
   if(typeof(window.VLine) === 'undefined') window.VLine = function(x,y,w,h) {return line(x,y,w,h);}
   if (Victor && VVector) console.info("𝘷Σ: VLine loaded");
   else console.error("𝘷Σ: VLine could not be loaded");
