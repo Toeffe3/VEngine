@@ -19,7 +19,7 @@
    * Creates a VScene that can be called with run.
    * name - the name of the VScene.
    * fun - the function to be run when scene is called.
-   * return: the value retuened from fun.
+   * return: undefined.
    */
     _VEngine.createScene = function(name,fun){data.scenes[name]=new VScene(fun);}
   /* {Scene.js} run(functionname, [pram1, ..., pram10])
@@ -42,7 +42,7 @@
    * threshold - the amount of frames (>=1) or percentage (<1) the FPS can drop.
    * return: the current fps or if 'within' is true, true if FPS is within tredshold.
    */
-    _VEngine.framerate = function(fps,thd=1) {
+    _VEngine.framerate = function(fps,thd=0.95) {
       if(thd) data.FPSthd=(thd<1?thd:thd/fps);
       if(typeof fps=="number")data.maxFPS=fps;
       if(fps===true)return!data.FPS>(data.maxFPS-(data.maxFPS*data.FPSthd));
@@ -77,6 +77,7 @@
   /* {Vengien.js} load([function])
    * Load the function after body has loaded and then call loop.
    * function - function to call ONCE before loop and after body.onload
+   * return: undefined
    */
     _VEngine.load = function(fun) {
       fun?data.loadf=fun:0;
