@@ -43,36 +43,31 @@
    * return: the current fps or if 'within' is true, true if FPS is within tredshold.
    */
     _VEngine.framerate = function(fps,thd=0.95) {
-      if(thd) data.FPSthd=(thd<1?thd:thd/fps);
+      if(thd)data.FPSthd=(thd<1?thd:thd/fps);
       if(typeof fps=="number")data.maxFPS=fps;
-      if(fps===true)return!data.FPS>(data.maxFPS-(data.maxFPS*data.FPSthd));
+      else if(fps===true)return!data.FPS>(data.maxFPS-(data.maxFPS*data.FPSthd));
       return data.FPS;
     }
   /* {VEnigne.js} loop(function, [b])
    * rerun the function until unloop is called.
    * function - function to be called.
    * b - recursive parameter, DO NOT PARSE ANYTHING TO THIS.
-   * return: undefined.
+   * return: true if stopped.
    * DO NOT PARSE ANYTHING TO ARGUMENT b
    */
     _VEngine.loop = function(fun,b=null) {
-      if(data.loaded) {
-        if(typeof fun=="function") {
-          data.maxframes=b;data.unloopID=b;b=null;data.update=fun;
-        } else {
-          if(data.unloopID > 0 && data.frameID >= data.unloopID) return false;
-          if(fun>data.frametime+1000/data.maxFPS) {
+      if(data.loaded){
+        if(typeof fun=="function"){data.maxframes=b;data.unloopID=b;b=null;data.update=fun;}
+        else{
+          if(data.unloopID>0&&data.frameID>=data.unloopID)return false;
+          if(fun>data.frametime+1000/data.maxFPS){
             data.FPS=1000/(fun-data.frametime);
             data.update();data.frametime=fun;
           }
         }
-      } else {
-        cancelAnimationFrame(data.frameID);
-        data.loaded = true;
-        return true;
-      }
+      }else{cancelAnimationFrame(data.frameID);data.loaded=true;return true;}
       data.frameID=requestAnimationFrame(_VEngine.loop.bind(data,b));
-      _VEngine.frame = data.frameID;
+      _VEngine.frame=data.frameID;
     }
   /* {Vengien.js} load([function])
    * Load the function after body has loaded and then call loop.
@@ -81,22 +76,20 @@
    */
     _VEngine.load = function(fun) {
       fun?data.loadf=fun:0;
-      if(fun) {
-        let f = data.loadf;
-        data.loaded = window.onload = function() { f();return true;}
-      } else {data.unloopID+=data.maxframes;data.loadf();data.loop();}
+      if(fun){let f=data.loadf;data.loaded=window.onload=function(){f();return true;}}
+      else{data.unloopID+=data.maxframes;data.loadf();data.loop();}
     }
   /* {VEnigne.js} unloop()
-   * Stops loop function from calling itself until loop is called again.
+   * Stops loop function from calling itself until loop() is called again.
    * return: undefined
    */
-    _VEngine.unloop = function() {data.loaded = false}
+    _VEngine.unloop = function(){data.loaded=false;}
 
     console.info("𝘷Σ: Vengien 1.0a by Victor Jacobsen");
     return _VEngine;
   }
 
-  if(typeof(window.VEngine) === 'undefined') window.VEngine = VEngine();
-  if (window.VEngine) console.info("𝘷Σ: Fully Initialized");
+  if(typeof(window.VEngine)==='undefined')window.VEngine=VEngine();
+  if (window.VEngine)console.info("𝘷Σ: Fully Initialized");
   else console.error("𝘷Σ: Vengien 1.0a could not load.");
-}) (window);
+})(window);
