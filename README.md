@@ -1,6 +1,6 @@
 # VEngine
 
-*This project is still in very erly development.*
+*This project is still in very early development.*
 
 A JavaScript library for HTML5 canvas, enabling more advanced creation and modifications of objects.
 
