@@ -1,7 +1,7 @@
 (function(window) {
   'use strict';
   function object(cx,cy){return new VObject(cx,cy);}
-  function simpel(){return new SimpelObject();}
+  function simpel(a){return new SimpelObject(a);}
   function point(x,y){return new VPoint(x,y);}
 
   class VObject {
@@ -65,7 +65,7 @@
     simpel(){return VObject.simpel(this);}
   }
   class SimpelObject {
-    constructor(){this.points=[];}
+    constructor(points=[]){console.log(points);this.points=points;}
   /* {VObject.js} point(x, [y])
    * Add point to object
    * x - x cordinate of point.
@@ -73,6 +73,28 @@
    * return: undefined
    */
     point(x,y){this.points.push([x,y==undefined?x:y]);}
+  /* {VCanvas.js} drawTo(canvas)
+   * Display the object on a canvas.
+   * canvas - the canvas to display the object on.
+   * return: undefined
+   */
+    drawTo(canvas){
+      canvas.ctx.beginPath();
+      for(let point of this.points)canvas.line(point[0],point[1]);
+      canvas.line(this.points[0][0],this.points[0][1]);
+      canvas.endshape();
+    }
+  /* {VObject.js} toVObject()
+   * Convert from points to a VObject as vectors.
+   * return: VObject
+   */
+    toVObject() {
+      var [cx, cy] = this.points[0], rtn = new VObject(cx, cy);
+      for(let point of this.points.slice(1,)) rtn.addPoint((point[1]-cy),-(point[0]-cx));
+      rtn.rotate(Math.PI/2);
+      return rtn;
+    }
+
   }
   class VPoint {
     constructor(x,y){this.x=x;this.y=y;}
@@ -124,8 +146,9 @@
   }
 
   if(typeof(window.VObject)==='undefined')window.VObject=function(cx,cy){if(cx===undefined)return VObject;else return object(cx,cy);}
-  if(typeof(window.SimpelObject)==='undefined')window.SimpelObject=function(){return simpel();}
+  if(typeof(window.SimpelObject)==='undefined')window.SimpelObject=function(a){return simpel(a);}
   if(typeof(window.VPoint)==='undefined')window.VPoint=function(x,y){if(x===undefined)return VPoint;else return point(x,y);}
   if(VObject&&SimpelObject&&VPoint)console.info("𝘷Σ: VObject loaded");
   else console.error("𝘷Σ: VObject could not be loaded");
-}) (window);
+  if(typeof(window.VLine)==='undefined')console.warn("𝘷Σ: VLine is reqired for some features in this addon!");
+})(window);

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>VEngine</title>
+    <style media="screen">
+      body, canvas, textarea {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+      }
+
+      textarea {
+        height: 100vh;
+        width: 550px;
+        position: fixed;
+      }
+
+      canvas {
+        position: fixed;
+        right: 0px;
+        max-height: 100vh;
+        height: calc(100vw - 550px);
+      }
+
+    </style>
+    <!-- Addons -->
+    <script src="https://cdn.jsdelivr.net/gh/Toeffe3/VEngine@master/addons/VCanvas.js" charset="utf-8" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Toeffe3/VEngine@master/addons/VLine.js" charset="utf-8" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Toeffe3/VEngine@master/addons/VObject.js" charset="utf-8" type="text/javascript"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/Toeffe3/VEngine@master/VEngine.js" charset="utf-8" type="text/javascript"></script>
+    <script id="rep" charset="utf-8" type="text/javascript">
+
+      // Using VCanvas
+      // Using VLine
+      // Using VObject
+
+      VEngine.framerate(1);
+
+      let c2d;
+
+      let obj1 = SimpelObject();
+      obj1.point(100);
+      obj1.point(100,200);
+      obj1.point(200);
+      obj1.point(200,100);
+
+      let obj2 = SimpelObject([[230,100],[340,340],[90,220]]).toVObject();
+      // obj1 = obj1.toVObject();
+
+      let i = 0;
+      VEngine.load(function() {
+        c2d = VCanvas(400,400);
+        c2d.background(0);
+      });
+
+      VEngine.loop(function() {
+        c2d.clear();
+        c2d.stroke(255,0,0);
+        obj1.drawTo(c2d);
+        c2d.stroke(255,0,255);
+        obj2.rotate(Math.PI/100)
+        obj2.drawTo(c2d);
+        // VEngine.unloop();
+      });
+    </script>
+  </head>
+  <body>
+    <textarea id="inp" readonly></textarea>
+    <script type="text/javascript" defer>
+      document.getElementById('inp').innerHTML = document.getElementById('rep').innerHTML;
+    </script>
+  </body>
+</html>
